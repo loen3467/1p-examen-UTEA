@@ -1,108 +1,176 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'profile.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Login> createState() => _LoginState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String _email = "luigi@gmail.com";
-
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfff2f9fe),
-      body: getBody(),
+      backgroundColor: Color(0xFFE9EBFF),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              height: 125,
+              child: Image.asset(
+                "../images/10K.png",
+              ),
+            ),
+            SizedBox(height: 40),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              height: 126,
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15, left: 20),
+                    child: Text(
+                      "Email Address",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  CredentialsText(
+                    label: "Email",
+                    prefixIcon: Icons.email,
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(25))),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              height: 126,
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15, left: 20),
+                    child: Text(
+                      "Password",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  CredentialsText(
+                    label: "Password",
+                    prefixIcon: Icons.lock,
+                    suffixIcon: Icons.visibility,
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(25))),
+            ),
+            Button(
+              label: "Login",
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Profile()));
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 28, right: 28),
+              child: Row(
+                children: [
+                  Text(
+                    "SignUp",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
+}
 
-  Widget getBody() {
-    var size = MediaQuery.of(context).size;
-    return SafeArea(
-        child: Center(
-      child: Column(
-        children: [
-          SizedBox(height: 50),
-          Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage("../images/profile.jpg"),
-                  fit: BoxFit.cover,
-                )),
-          ),
-          SizedBox(height: 50),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 25),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFFFFFF),
-              borderRadius: BorderRadius.circular(25),
+class CredentialsText extends StatelessWidget {
+  final String label;
+  final IconData prefixIcon;
+  final IconData? suffixIcon;
+  CredentialsText({this.label = '', required this.prefixIcon, this.suffixIcon});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+      child: TextField(
+        decoration: InputDecoration(
+            prefixIcon: Icon(prefixIcon),
+            filled: true,
+            isDense: true,
+            fillColor: Color(0xFFE4E4E4),
+            hintText: label,
+            suffixIcon: Icon(suffixIcon),
+            hintStyle: TextStyle(
+              fontSize: 14,
             ),
-            child: Padding(
-              padding: EdgeInsets.only(left: 20, top: 15, bottom: 5, right: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Email Addres",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 82, 82, 82),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13,
-                    ),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.email_outlined),
-                      hintText: "Email",
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 25),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFFFFFF),
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(left: 20, top: 15, bottom: 5, right: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Password",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 82, 82, 82),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13,
-                    ),
-                  ),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.lock_outline_rounded),
-                      suffixIcon: Icon(Icons.remove_red_eye_outlined),
-                      hintText: "Password",
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            )),
       ),
-    ));
+    );
+  }
+}
+
+class Button extends StatelessWidget {
+  final Function onPressed;
+  final String label;
+  Button({required this.onPressed, this.label = ""});
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: () => onPressed(),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          height: 60,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Color(0xFF20256B),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Center(
+              child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          )),
+        ));
   }
 }
